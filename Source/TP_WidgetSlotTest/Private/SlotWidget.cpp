@@ -7,9 +7,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "MainWidget.h"
 #include <Blueprint/WidgetBlueprintLibrary.h>
+#include "Tasks/Task.h"
 #include "Engine/LevelStreamingDynamic.h"
 
-
+using namespace UE::Tasks;
 
 void USlotWidget::NativeConstruct()
 {
@@ -40,4 +41,55 @@ void USlotWidget::OnButtonClick()
 		
 		}
 	}
+
+	//読み込みボタンを表示
+	m_throbber->SetVisibility(ESlateVisibility::Visible);
+
+	Async(EAsyncExecution::Thread, [this]()
+		{
+			float inTime = 4;
+			float time = 0;
+
+			m_throbber->SetVisibility(ESlateVisibility::Visible);
+
+			while (inTime > time)
+			{
+				FPlatformProcess::Sleep(1.f);
+				UE_LOG(LogTemp, Log, TEXT("wait"));
+				time = time + 1;
+			}
+			
+
+			AsyncTask(ENamedThreads::GameThread, [this]()
+				{
+
+					if (m_throbber)
+					{
+						// m_throbberのプロパティにアクセス
+						m_throbber->SetVisibility(ESlateVisibility::Hidden);
+					}
+
+				});
+		});
+
+
+
 }
+
+void USlotWidget::ShowThrobber()
+{
+	float inTime = 4;
+	float time = 0;
+
+	while (inTime > time)
+	{
+		FPlatformProcess::Sleep(1.f);
+		UE_LOG(LogTemp, Log, TEXT("wait"));
+		time = time + 1;
+	}
+	m_throbber->SetVisibility(ESlateVisibility::Hidden);
+	UE_LOG(LogTemp, Log, TEXT("end"));
+
+}
+
+

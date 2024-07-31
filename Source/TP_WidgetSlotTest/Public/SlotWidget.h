@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include <Components/TextBlock.h>
+#include <Components/Throbber.h>
 #include "SlotWidget.generated.h"
 
 /**
@@ -17,10 +18,16 @@ class TP_WIDGETSLOTTEST_API USlotWidget : public UUserWidget
 
 public:
 
+	void ShowThrobber();
+
 	virtual void NativeConstruct() override;
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* m_text;
+
+
+	UPROPERTY(meta = (BindWidget))
+	UThrobber* m_throbber;
 
 	int m_int = 0;
 
@@ -33,7 +40,5 @@ private:
 
 	UFUNCTION()
 	void OnButtonClick();
-
-
 
 };
