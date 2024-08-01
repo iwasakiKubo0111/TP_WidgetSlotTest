@@ -45,3 +45,8 @@ void UMainWidget::NativeConstruct()
 		UKismetSystemLibrary::PrintString(GetWorld(), "NG");
 	}
 }
+
+void UMainWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+
+}

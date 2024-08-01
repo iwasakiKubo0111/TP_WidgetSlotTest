@@ -4,29 +4,24 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include <Components/WrapBox.h>
-#include "MainWidget.generated.h"
-
+#include "origin.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TP_WIDGETSLOTTEST_API UMainWidget : public UUserWidget
+class TP_WIDGETSLOTTEST_API Uorigin : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-
-	//UMainWidget(const FObjectInitializer& ObjectInitializer);
-
+	Uorigin(const FObjectInitializer& ObjectInitializer);
 	virtual void NativeConstruct() override;
-
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
-	UPROPERTY(meta = (BindWidget))
-	UWrapBox* m_wrapBox;
-
-	FString m_widgetName = "Name : WBP_Main";
 	
+private:
+	APlayerController* m_playerController;
+	FVector m_location;
+	FVector2D m_screenPosition;
+
 };
